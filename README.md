@@ -1,0 +1,1 @@
+# scala-automation-samples
