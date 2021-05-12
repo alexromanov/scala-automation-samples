@@ -43,3 +43,4 @@ build
 
 #general
 *.class
+null/
