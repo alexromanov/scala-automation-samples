@@ -1,6 +1,7 @@
 package email
 
 import com.sun.mail.imap.IdleManager
+import io.qameta.allure.scalatest.AllureScalatestContext
 
 import java.nio.file.Paths
 import java.util.Properties
@@ -20,14 +21,14 @@ class MailApiTest extends BaseApiTest {
   val from: String = config.getString("sender")
   val props: Properties = getProperties
 
-  "Client" should "be able to send email message" in {
+  "Client" should "be able to send email message" in new AllureScalatestContext {
     val session: Session = getSession(props)
 
     sendEmail(session, from, to, messageSubject, "files/test.txt",
       "files/test_attachment.txt")
   }
 
-  "Client" should "be able to receive email message" in {
+  "Client" should "be able to receive email message" in new AllureScalatestContext {
     val session: Session = getSession(props)
 
     val folder: Folder = openFolderInMailBox(session, folderName)

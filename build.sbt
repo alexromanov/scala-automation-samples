@@ -5,6 +5,12 @@ version := "0.1"
 
 scalaVersion := "2.13.5"
 
+val allureScalaTestVersion = "2.13.3"
+
+resolvers +=
+  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
+
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.3.0-SNAP2" % Test
 libraryDependencies += "com.github.daddykotex" %% "courier" % "3.0.0-M2a"
 libraryDependencies += "com.typesafe" % "config" % "1.4.1"
@@ -16,6 +22,12 @@ libraryDependencies += "org.scalatestplus" %% "selenium-3-141" % "3.2.7.0" % "te
 libraryDependencies += "org.scalatest" %% "scalatest-flatspec" % "3.2.7" % "test"
 libraryDependencies += "org.scalatest" %% "scalatest-shouldmatchers" % "3.2.7" % "test"
 libraryDependencies += "com.google.guava" % "guava" % "30.1.1-jre"
+libraryDependencies += "io.qameta.allure" % "allure-scalatest_2.13" % allureScalaTestVersion % Test
 
 
 enablePlugins(AkkaGrpcPlugin)
+
+testOptions in Test ++= Seq(
+  Tests.Argument(TestFrameworks.ScalaTest, "-oD"),
+  Tests.Argument(TestFrameworks.ScalaTest, "-C", "io.qameta.allure.scalatest.AllureScalatest")
+)

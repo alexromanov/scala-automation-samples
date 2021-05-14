@@ -1,5 +1,6 @@
 package ui
 
+import io.qameta.allure.scalatest.AllureScalatestContext
 import org.openqa.selenium.chrome.ChromeDriver
 import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll}
 import org.scalatest.concurrent.Eventually
@@ -17,7 +18,7 @@ class BlogTest extends AnyFlatSpec with BeforeAndAfterAll with Matchers with Eve
     new ChromeDriver()
   }
 
-  "User" should "be able to view latest blog post" in {
+  "User" should "be able to view latest blog post" in new AllureScalatestContext {
     val homePage = new HomePage
     go to homePage
     val posts = findAll(CssSelectorQuery("div.post-preview")).toList
@@ -26,7 +27,7 @@ class BlogTest extends AnyFlatSpec with BeforeAndAfterAll with Matchers with Eve
     latestPost.text should not be empty
   }
 
-  "User" should "be able to open Contact Page" in {
+  "User" should "be able to open Contact Page" in new AllureScalatestContext {
     val homePage = new HomePage
     go to homePage
     homePage.url should equal (currentUrl)
@@ -38,7 +39,7 @@ class BlogTest extends AnyFlatSpec with BeforeAndAfterAll with Matchers with Eve
     contactPage.url should equal (currentUrl)
   }
 
-  "User" should "be able to send message to author" in {
+  "User" should "be able to send message to author" in new AllureScalatestContext {
     val contactPage = new ContactPage
     go to contactPage
     contactPage.url should be (currentUrl)
@@ -51,7 +52,7 @@ class BlogTest extends AnyFlatSpec with BeforeAndAfterAll with Matchers with Eve
     click on cssSelector(contactPage.sendButton)
   }
 
-  "User" should "be able to open About Page" in {
+  "User" should "be able to open About Page" in new AllureScalatestContext {
     val homePage = new HomePage
     go to homePage
     homePage.url should equal (currentUrl)
