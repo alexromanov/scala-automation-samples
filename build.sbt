@@ -23,6 +23,7 @@ libraryDependencies += "org.scalatest" %% "scalatest-flatspec" % "3.2.7" % "test
 libraryDependencies += "org.scalatest" %% "scalatest-shouldmatchers" % "3.2.7" % "test"
 libraryDependencies += "com.google.guava" % "guava" % "30.1.1-jre"
 libraryDependencies += "io.qameta.allure" % "allure-scalatest_2.13" % allureScalaTestVersion % Test
+libraryDependencies += "io.rest-assured" % "rest-assured" % "4.3.3" % Test
 
 
 enablePlugins(AkkaGrpcPlugin)
