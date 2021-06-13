@@ -33,6 +33,5 @@ class WeatherApiTest extends BaseApiTest {
     val response = when get s"$host?id=$cityId&appid=$appId"
     response.statusCode should be(200)
     response.jsonPath().get[WeatherData]()
-
   }
 }
