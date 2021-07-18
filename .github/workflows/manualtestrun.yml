@@ -22,7 +22,7 @@ jobs:
         run: sbt compile
 
       - name: Test
-        run:  sbt test
+        run:  sbt "testOnly * -- -n Smoke"
 
       - name: Prepare report
         uses: Xotabu4/send-to-allure-server-action@1
