@@ -12,9 +12,6 @@
 # sbt
 # (may want to keep parts of 'project')
 bin/
-!project/plugins.sbt
-!project/build.properties
-project/
 target/
 build/
 
