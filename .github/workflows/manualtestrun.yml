@@ -1,0 +1,51 @@
+name: Execute Test Run
+
+on:
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.PAT_READ_PACKAGES_TO_ENABLE_MAVEN_DOWNLOAD }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: '11.0.8'
+
+      - name: Compile
+        run: sbt compile
+
+      - name: Test
+        run:  sbt test
+
+      - name: Prepare report
+        uses: Xotabu4/send-to-allure-server-action@1
+        id: allure-report
+        # always() needed because we want report for failed tests as well
+        if: ${{ always() }}
+        with:
+          allure-server-url: 'http://94.153.81.167:8080/'
+
+      - name: Get date
+        id: date
+        if: ${{ always() }}
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%T')"
+
+      - name: Send email notification
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: ${{ steps.date.outputs.date }} Test run is finished
+          body: Test report - ${{ steps.allure-report.outputs.report-url }}
+          to: al8x.romanov@gmail.com
+          from: AutoTest Executor
